@@ -28,25 +28,45 @@ echo Please set your directory below.
 set /p path=
 
 :platform
-if exist "%path%/DeadByDaylight/Content/Paks/pakchunk0-EGS.pak" set platform="EGS"
-if exist "%path%/DeadByDaylight/Content/Paks/pakchunk0-WinGDK.pak" set platform="WinGDK"
-if exist "%path%/DeadByDaylight/Content/Paks/pakchunk0-WindowsNoEditor.pak" set platform="WindowsNoEditor"
+if exist "%path%/DeadByDaylight/Content/Paks/pakchunk0-EGS.pak" set platform=EGS
+if exist "%path%/DeadByDaylight/Content/Paks/pakchunk0-WinGDK.pak" set platform=WinGDK
+if exist "%path%/DeadByDaylight/Content/Paks/pakchunk0-WindowsNoEditor.pak" set platform=WindowsNoEditor
 md %platform%
 
-:unpack
-echo %path%> ../gamepath.txt
+:start
+echo [1]. Unpack Single Pak
+echo [2]. Unpack All Paks
+echo.
+set unpackChoice=
+set /p unpackChoice=Select an option: 
+if not '%unpackChoice%'=='' set unpackChoice=%unpackChoice:~0,1%
+if '%unpackChoice%'=='1' goto unpackSingle
+if '%unpackChoice%'=='2' goto unpackAll
+echo "%unpackChoice%" is not valid, try again.
+echo.
+goto start
+
+:unpackSingle
+::Extract Single Pak with UnrealPak.
+set /p pakchunkNum=Pak Chunk ID: 
+echo Unpacking pakchunk%pakchunkNum%-%platform%.pak.
+UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk%pakchunkNum%-%platform%.pak" -Extract "../%platform%"
+echo Finished unpacking pakchunk%pakchunkNum%-%platform%.pak.
+goto end
+
+:unpackAll
 ::Extract Paks 0-39 with UnrealPak.
 echo Starting unpack.
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk0-%platform%.pak"-Extract "../%platform%"
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk1-%platform%.pak"-Extract "../%platform%"
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk2-%platform%.pak"-Extract "../%platform%\DeadByDaylight"
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk3-%platform%.pak"-Extract "../%platform%\DeadByDaylight\Content\Characters"
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk4-%platform%.pak"-Extract "../%platform%\DeadByDaylight\Content"
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk5-%platform%.pak"-Extract "../%platform%\DeadByDaylight\Content"
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk6-%platform%.pak"-Extract "../%platform%\DeadByDaylight\Content"
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk7-%platform%.pak"-Extract "../%platform%\DeadByDaylight\Content"
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk8-%platform%.pak"-Extract "../%platform%\DeadByDaylight\Content"
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk9-%platform%.pak"-Extract "../%platform%\DeadByDaylight\Content\Characters\Campers"
+UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk0-%platform%.pak" -Extract "../%platform%"
+UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk1-%platform%.pak" -Extract "../%platform%"
+UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk2-%platform%.pak" -Extract "../%platform%\DeadByDaylight"
+UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk3-%platform%.pak" -Extract "../%platform%\DeadByDaylight\Content\Characters"
+UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk4-%platform%.pak" -Extract "../%platform%\DeadByDaylight\Content"
+UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk5-%platform%.pak" -Extract "../%platform%\DeadByDaylight\Content"
+UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk6-%platform%.pak" -Extract "../%platform%\DeadByDaylight\Content"
+UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk7-%platform%.pak" -Extract "../%platform%\DeadByDaylight\Content"
+UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk8-%platform%.pak" -Extract "../%platform%\DeadByDaylight\Content"
+UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk9-%platform%.pak" -Extract "../%platform%\DeadByDaylight\Content\Characters\Campers"
 UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk10-%platform%.pak" -Extract "../%platform%\DeadByDaylight\Content\Characters\Campers\Claudette"
 UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk11-%platform%.pak" -Extract "../%platform%\DeadByDaylight\Content\Characters\Campers"
 UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk12-%platform%.pak" -Extract "../%platform%\DeadByDaylight\Content\Characters\Campers\Dwight"
@@ -78,4 +98,6 @@ UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk37-%platform%.pak" -Extrac
 UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk38-%platform%.pak" -Extract "../%platform%\DeadByDaylight\Content\Textures"
 UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk39-%platform%.pak" -Extract "../%platform%\DeadByDaylight\Content"
 echo Finished Unpacking.
+
+:end 
 pause
