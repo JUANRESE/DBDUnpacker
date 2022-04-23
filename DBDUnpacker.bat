@@ -1,5 +1,6 @@
 @echo off
 set version=1.2.0
+set pwsh=%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\powershell.exe -Command
 title Dead by Daylight Unpacker (%version%)
 echo  ___  ___ ___    _   _                    _           
 echo ^|   \^| _ )   \  ^| ^| ^| ^|_ _  _ __  __ _ __^| ^|_____ _ _ 
@@ -10,9 +11,8 @@ echo.
 echo Dead by Daylight Unpacker (%version%)
 echo By BrandonItaly#0495
 echo.
-cd "Engine/Binaries/Win64"
-if exist "../../../gamepath.txt" (
-    set /p path=<"../../../gamepath.txt"
+if exist gamepath.txt (
+    set /p path=<gamepath.txt
     goto :start
 ) else goto :paths
 :paths
@@ -36,7 +36,7 @@ if exist "%path%/DeadByDaylight/Content/Paks/pakchunk0-EGS.pak" set platform=EGS
 goto :eof
 
 :start
-echo %path%>"../../../gamepath.txt"
+echo %path%>gamepath.txt
 call :platformCheck
 echo [1]. Unpack Single Pak
 echo [2]. Unpack All Paks
@@ -53,55 +53,16 @@ goto :start
 :unpackSingle
 set /p pakchunkNum=Pak Chunk ID: 
 echo Unpacking pakchunk%pakchunkNum%-%platform%.pak.
-if not exist "../../../%platform%" md "../../../%platform%"
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk%pakchunkNum%-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
+if not exist "%platform%" md "%platform%"
+UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk%pakchunkNum%-%platform%.pak" -Extract "%platform%" -extracttomountpoint
 echo Finished unpacking pakchunk%pakchunkNum%-%platform%.pak.
 goto :end
 
 :unpackAll
 echo Starting unpack.
-if not exist "../../../%platform%" md "../../../%platform%"
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk0-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk1-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk2-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk3-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk4-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk5-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk6-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk7-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk8-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk9-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk10-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk11-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk12-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk13-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk14-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk15-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk16-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk17-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk18-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk19-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk20-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk21-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk22-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk23-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk24-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk25-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk26-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk27-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk28-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk29-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk30-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk31-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk32-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk33-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk34-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk35-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk36-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk37-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk38-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk39-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
-echo Finished Unpacking.
+if not exist "%platform%" md "%platform%"
+%pwsh% "& {Get-ChildItem -Path '%path%\DeadByDaylight\Content\Paks\*' -Include *.pak | Select-Object -exp FullName | ForEach-Object { Engine\Binaries\Win64\UnrealPak.exe $_ -Extract '../../../%platform%' -extracttomountpoint } }"
+echo Finished unpacking.
 
 :end 
 pause
