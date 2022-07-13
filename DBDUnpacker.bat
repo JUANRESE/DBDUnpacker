@@ -1,5 +1,5 @@
 @echo off
-set version=1.2.0
+set version=1.2.1
 set pwsh=%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\powershell.exe -Command
 title Dead by Daylight Unpacker (%version%)
 echo  ___  ___ ___    _   _                    _           
@@ -54,7 +54,7 @@ goto :start
 set /p pakchunkNum=Pak Chunk ID: 
 echo Unpacking pakchunk%pakchunkNum%-%platform%.pak.
 if not exist "%platform%" md "%platform%"
-UnrealPak "%path%/DeadByDaylight/Content/Paks/pakchunk%pakchunkNum%-%platform%.pak" -Extract "%platform%" -extracttomountpoint
+Engine\Binaries\Win64\UnrealPak.exe "%path%/DeadByDaylight/Content/Paks/pakchunk%pakchunkNum%-%platform%.pak" -Extract "../../../%platform%" -extracttomountpoint
 echo Finished unpacking pakchunk%pakchunkNum%-%platform%.pak.
 goto :end
 
@@ -62,7 +62,7 @@ goto :end
 echo Starting unpack.
 if not exist "%platform%" md "%platform%"
 %pwsh% "& {Get-ChildItem -Path '%path%\DeadByDaylight\Content\Paks\*' -Include *.pak | Select-Object -exp FullName | ForEach-Object { Engine\Binaries\Win64\UnrealPak.exe $_ -Extract '../../../%platform%' -extracttomountpoint } }"
-echo Finished unpacking.
+echo Finished Unpacking.
 
 :end 
 pause
